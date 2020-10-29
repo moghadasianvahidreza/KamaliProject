@@ -12,8 +12,7 @@ namespace KamaliProject.Models
 	{
 		public Account() : base()
 		{
-			Username = "Amir";
-			Password = "123456";
+
 		}
 
 		[Required]

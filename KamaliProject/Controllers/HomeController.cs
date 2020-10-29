@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -19,7 +20,7 @@ namespace KamaliProject.Controllers
 
 		#region Recaptcha
 		[HttpPost]
-		public ActionResult Login(FormCollection form, string username, string password)
+		public ActionResult Login(FormCollection form,string username, string password)
 		{
 			string urlToPost = "https://www.google.com/recaptcha/api/siteverify";
 			string secretKey = "6LcuJNwZAAAAAB4w0N9nsONHQDYQ7qqDxjFjXZw-"; // change this
@@ -57,9 +58,12 @@ namespace KamaliProject.Controllers
 			}
 
 			// go ahead and write code to validate username password against database
-			Models.Account user = new Models.Account();
 
-			if (user.Username != username || user.Password != password)
+			string usernameWebConfig = ConfigurationManager.AppSettings["username"].ToString();
+
+			string passwordWebConfig = ConfigurationManager.AppSettings["password"].ToString();
+
+			if ( usernameWebConfig != username || passwordWebConfig != password)
 			{
 				ViewBag.Message = "Sorry, Usernam/Password is not valid!!!	";
 				return View();
